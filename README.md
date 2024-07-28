@@ -1,14 +1,14 @@
 # Bookviser
 
-This readme should help get you started developing with Vue 3 in Vite.
+This readme should help get you started developing with Vue 3 with Flask and RESTful API.
 
 ## Recommended IDE Setup
 
 [Pycharm Professional](https://www.jetbrains.com/pycharm/) + [DB Browser for SQLite](https://sqlitebrowser.org/) + [Insomnia](https://insomnia.rest/)
 
-## Customize configuration
+## API configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+See [Flask-RESTful API Reference](https://flask-restful.readthedocs.io/en/latest/).
 
 ## Project Setup
 
