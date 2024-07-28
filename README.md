@@ -4,7 +4,7 @@ This readme should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+[Pycharm Professional](https://www.jetbrains.com/pycharm/) + [DB Browser for SQLite](https://sqlitebrowser.org/) + [Insomnia](https://insomnia.rest/)
 
 ## Customize configuration
 
