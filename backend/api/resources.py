@@ -4,12 +4,11 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from sqlalchemy.exc import IntegrityError
 from backend.models import User, Book, Section, BookIssue
 from backend import db
-from .parsers import user_parse
 
 
 class UserRegister(Resource):
     def post(self):
-        data = user_parse()
+        data = request.get_json()
         new_user = User(username=data['username'], email=data['email'], password=data['password'], role=data['role'])
         try:
             db.session.add(new_user)
@@ -24,7 +23,7 @@ class UserRegister(Resource):
 
 class UserLogin(Resource):
     def post(self):
-        data = user_parse()
+        data = request.get_json()
         user = User.query.filter_by(username=data['username'], role=data['role']).first()
         if user and user.password == data['password']:
             access_token = create_access_token(identity={'username': user.username, 'id': user.user_id, 'role': user.role})
