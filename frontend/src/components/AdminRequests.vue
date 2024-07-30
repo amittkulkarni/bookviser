@@ -46,6 +46,7 @@
               </p>
               <div class="d-flex justify-content-between">
                 <button v-if="request.status === 'requested'" @click="approveRequest(request.issue_id)" class="btn btn-success">Approve</button>
+                <button v-if="request.status === 'requested'" @click="rejectRequest(request.issue_id)" class="btn btn-danger">Reject</button>
                 <button v-if="request.status === 'issued'" @click="revokeRequest(request.issue_id)" class="btn btn-danger">Revoke</button>
               </div>
             </div>
@@ -107,6 +108,9 @@ export default {
     async revokeRequest(issue_id) {
       await this.updateRequestStatus(issue_id, 'revoke');
     },
+    async rejectRequest(issue_id) {
+    await this.updateRequestStatus(issue_id, 'reject');
+  },
     async updateRequestStatus(issue_id, action) {
       const token = localStorage.getItem('access_token');
       if (!token) {

@@ -12,7 +12,7 @@
               <a class="nav-link" href="#">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/admin/books">Books</a>
+              <router-link class="nav-link" to="/admin/books">Books</router-link>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/admin/sections">Sections</a>

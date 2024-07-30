@@ -38,7 +38,7 @@
               <h5 class="card-title">{{ book.name }}</h5>
               <p class="card-text">{{ book.author }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <button v-if="book.status === 'available'" @click="requestBook(book)" class="btn btn-dark">Request</button>
+                <button v-if="book.status === 'returned'" @click="requestBook(book)" class="btn btn-dark">Request</button>
                 <button v-if="book.status === 'requested'" class="btn btn-dark" disabled>Requested</button>
                 <button v-if="book.status === 'issued'" class="btn btn-dark" disabled>In Shelf</button>
               <button @click="viewDetails(book)" class="btn btn-warning">See Details</button>
@@ -133,11 +133,12 @@ export default {
       });
       const data = await response.json();
       this.books = data.books.map(book => {
-      let status = 'available';
-      if (book.issues) {
-        if (book.issues.status === 'requested') {
+      let status = 'returned';
+      if (book.issues && book.issues.length > 0) {
+        const latestIssue = book.issues[book.issues.length - 1];
+        if (latestIssue.status === 'requested') {
           status = 'requested';
-        } else if (book.issues.status === 'issued') {
+        } else if (latestIssue.status === 'issued') {
           status = 'issued';
         }
       }

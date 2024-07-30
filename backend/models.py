@@ -48,7 +48,7 @@ class BookIssue(db.Model):
     issue_id = db.Column(db.Integer, primary_key=True)
     book_id = db.Column(db.Integer, db.ForeignKey('books.book_id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=False)
-    date_issued = db.Column(db.DateTime)
+    date_issued = db.Column(db.DateTime, default=datetime.utcnow)
     return_date = db.Column(db.DateTime)
     status = db.Column(db.Enum('requested', 'issued', 'returned'), default='returned', nullable=False)
 
@@ -62,7 +62,7 @@ class BookIssue(db.Model):
 
     def set_return_date(self, duration_days):
         if not self.date_issued:
-            self.date_issued=datetime.utcnow().isoformat()
+            self.date_issued = datetime.utcnow()
         self.return_date = self.date_issued + timedelta(days=duration_days)
 
 

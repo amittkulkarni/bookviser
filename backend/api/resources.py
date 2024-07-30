@@ -240,7 +240,7 @@ class SearchBooks(Resource):
     def get(self):
         args = request.args
         books = Book.query.filter(Book.name.like(f"%{args.get('name', '')}%")).all()
-        return {'books': [ book.as_dict() for book in books]}, 200
+        return {'books': [book.as_dict() for book in books]}, 200
 
 
 class BookRequests(Resource):
@@ -249,7 +249,7 @@ class BookRequests(Resource):
         current_user = get_jwt_identity()
         if current_user['role'] != 'librarian':
             return {'message': 'Librarian access required'}, 403
-        book_requests = BookIssue.query.all()
+        book_requests = BookIssue.query.order_by(BookIssue.date_issued.desc()).all()
         result = []
         for req in book_requests:
             user = User.query.get(req.user_id)
@@ -288,5 +288,9 @@ class BookRequests(Resource):
             book = Book.query.get(req.book_id)
             if book:
                 book.available_copies += 1
+        elif action == 'reject':
+            db.session.delete(req)
+            db.session.commit()
+            return {'message': 'Request rejected successfully.'}, 200
         db.session.commit()
         return {'message': 'Request updated successfully.'}, 200
