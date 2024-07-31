@@ -13,7 +13,7 @@
               <router-link to="/user/dashboard" class="nav-link">Home</router-link>
             </li>
             <li class="nav-item">
-              <router-link to="/user/books" class="nav-link">Books</router-link>
+              <router-link to="/book/issued" class="nav-link">Books</router-link>
             </li>
             <li class="nav-item">
               <router-link to="/user/sections" class="nav-link">Sections</router-link>
@@ -36,12 +36,13 @@
             <img src="https://boxshot.com/3d-book-cover/how-to-make-a-3d-book-cover-in-photoshop/sample.jpg" class="card-img-top" alt="Book Cover">
             <div class="card-body">
               <h5 class="card-title">{{ book.name }}</h5>
-              <p class="card-text">{{ book.author }}</p>
+              <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+              <p class="card-text"><strong>Section:</strong> {{ book.section }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <button v-if="book.status === 'returned'" @click="requestBook(book)" class="btn btn-dark">Request</button>
                 <button v-if="book.status === 'requested'" class="btn btn-dark" disabled>Requested</button>
                 <button v-if="book.status === 'issued'" class="btn btn-dark" disabled>In Shelf</button>
-              <button @click="viewDetails(book)" class="btn btn-warning">See Details</button>
+                <button @click="viewDetails(book)" class="btn btn-warning">See Details</button>
               </div>
             </div>
           </div>
@@ -79,7 +80,6 @@
           </div>
           <div class="modal-body">
             <p><strong>Author:</strong> {{ selectedBook.author }}</p>
-            <p><strong>Content:</strong> {{ selectedBook.content }}</p>
             <p><strong>Available Copies:</strong> {{ selectedBook.available_copies }}</p>
           </div>
           <div class="modal-footer">

@@ -250,6 +250,26 @@ export default {
         console.error('Failed to update book');
       }
     },
+    async searchBooks() {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        this.logout();
+        return;
+      }
+      const response = await fetch(`http://localhost:5000/api/search/book?name=${this.searchQuery}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        this.books = data.books;
+      } else {
+        console.error('Failed to search books: ', response.statusText);
+      }
+    },
     async deleteBook(book_id) {
       const token = localStorage.getItem('access_token');
       if (!token) {

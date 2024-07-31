@@ -217,8 +217,28 @@ class SectionResource(Resource):
 
 class IssueBook(Resource):
     @jwt_required()
+    def get(self):
+        current_user = get_jwt_identity()
+        issued_books = BookIssue.query.filter_by(user_id=current_user['id'], status='issued').all()
+        return {'books': [{
+            'book_id': issue.book_id,
+            'name': issue.book.name,
+            'author': issue.book.author,
+            'date_issued': issue.date_issued.isoformat(),
+            'return_date': issue.return_date.isoformat() if issue.return_date else None,
+            'content': issue.book.content,
+            'section': issue.book.section.name,
+            'status': issue.status
+        }
+            for issue in issued_books]}, 200
+
+    @jwt_required()
     def post(self, book_id):
         book = Book.query.get(book_id)
+        current_books = (BookIssue.query.filter_by(user_id=get_jwt_identity()['id'])
+                         .filter(BookIssue.status.in_(['issued', 'requested'])).count())
+        if current_books >= 5:
+            return {'message': 'Maximum number of book request reached'}, 400
         if not book:
             return {'message': 'Book not found'}, 404
         if book.available_copies <= 0:
@@ -233,6 +253,18 @@ class IssueBook(Resource):
         db.session.add(book_issue)
         db.session.commit()
         return {'message': 'Book issued successfully.'}, 200
+
+    @jwt_required()
+    def put(self, book_id):
+        req = BookIssue.query.filter_by(book_id=book_id, user_id=get_jwt_identity()['id'], status='issued').first()
+        if not req:
+            return {'message': 'Request not found'}, 404
+        req.status = 'returned'
+        book = Book.query.get(req.book_id)
+        if book:
+            book.available_copies += 1
+        db.session.commit()
+        return {'message': 'Book returned successfully.'}, 200
 
 
 class SearchBooks(Resource):

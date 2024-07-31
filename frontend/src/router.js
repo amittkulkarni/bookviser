@@ -8,6 +8,7 @@ import AdminDashboard from './components/AdminDashboard.vue';
 import AdminSections from "./components/AdminSections.vue";
 import AdminRequests from "./components/AdminRequests.vue";
 import BookHistory from "./components/BookHIstory.vue";
+import UserBooks from "./components/UserBooks.vue";
 
 const routes = [
   { path: '/admin/dashboard', name:'AdminDashboard', component: AdminDashboard },
@@ -18,6 +19,7 @@ const routes = [
   { path: '/user/dashboard', name:'UserDashboard',  component: UserDashboard },
   { path: '/login', name:'Login', component: Login, alias: '/' },
   { path: '/admin/books/:bookId/history', name: 'BookHistory', component: BookHistory},
+  { path: '/book/issued', name: 'BookIssued', component: UserBooks},
   { path: '/register',name:'Register', component: Register }
 ];
 

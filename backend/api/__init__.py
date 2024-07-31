@@ -11,6 +11,6 @@ def initialize_api():
     api.add_resource(UserActions, '/admin/update-user')
     api.add_resource(BookResource, '/admin/books', '/admin/book/<int:book_id>')
     api.add_resource(SectionResource, '/admin/sections', '/admin/section/<int:section_id>')
-    api.add_resource(IssueBook, '/book/issue/<int:book_id>')
+    api.add_resource(IssueBook, '/book/issued', '/book/issue/<int:book_id>')
     api.add_resource(SearchBooks, '/search/book')
     api.add_resource(BookRequests, '/admin/requests')

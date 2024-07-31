@@ -40,7 +40,10 @@ class Book(db.Model):
     available_copies = db.Column(db.Integer, default=1)
 
     def as_dict(self):
-        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
+        result = {col.name: getattr(self, col.name) for col in self.__table__.columns}
+        if self.date_added:
+            result['date_added'] = self.date_added.isoformat()
+        return result
 
 
 class BookIssue(db.Model):
