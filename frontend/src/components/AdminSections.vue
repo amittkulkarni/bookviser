@@ -1,31 +1,7 @@
 <template>
   <div class="admin-sections">
     <!-- Navbar and Section List Section -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link to="/admin/dashboard" class="nav-link">Dashboard</router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/books">Books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/sections">Sections</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/users">Users</a>
-            </li>
-          </ul>
-        </div>
-        <button class="btn btn-outline-light" @click="logout">Logout</button>
-      </div>
-    </nav>
+    <Navbar :books-link="'/admin/books'" :dashboard-link="'/admin/dashboard'" :dashboard-text="'Librarian  Dashboard'"/>
     <div class="container my-4">
       <h1 class="text-center mb-4">Library Sections</h1>
       <div class="d-flex justify-content-between align-items-center mb-4">
@@ -102,8 +78,10 @@
 
 <script>
 import { Modal } from "bootstrap/js/index.esm.js";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
+  components: {Navbar},
   data() {
     return {
       sections: [],

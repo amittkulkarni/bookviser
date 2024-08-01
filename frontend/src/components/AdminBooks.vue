@@ -1,35 +1,8 @@
 <template>
   <div class="admin-books">
     <!-- Navbar and Book List Section -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <router-link class="navbar-brand" to="/admin/dashboard">Admin Dashboard</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link to="/admin/requests" class="nav-link">Requests</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/books">Books</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/sections">Sections</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/users">Users</router-link>
-            </li>
-          </ul>
-          <form class="d-flex" @submit.prevent="searchBooks">
-            <input class="form-control me-2" type="search" placeholder="Search Books" v-model="searchQuery" aria-label="Search">
-            <button class="btn btn-outline-light" type="submit">Search</button>
-          </form>
-        </div>
-        <button class="btn btn-outline-light" @click="logout">Logout</button>
-      </div>
-    </nav>
+    <Navbar :books-link="'/admin/books'" :dashboard-link="'/admin/dashboard'" :dashboard-text="'Librarian  Dashboard'" :show-search-bar="true" @search="searchBooks"/>
+
     <div class="container my-4">
       <h1 class="text-center mb-4">Library Books</h1>
       <div class="d-flex justify-content-between align-items-center mb-4">
@@ -142,8 +115,10 @@
 
 <script>
 import { Modal } from "bootstrap/js/index.esm.js";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
+  components: {Navbar},
   data() {
     return {
       books: [],
@@ -250,13 +225,13 @@ export default {
         console.error('Failed to update book');
       }
     },
-    async searchBooks() {
+    async searchBooks(query) {
       const token = localStorage.getItem('access_token');
       if (!token) {
         this.logout();
         return;
       }
-      const response = await fetch(`http://localhost:5000/api/search/book?name=${this.searchQuery}`, {
+      const response = await fetch(`http://localhost:5000/api/search/book?name=${encodeURIComponent(query)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

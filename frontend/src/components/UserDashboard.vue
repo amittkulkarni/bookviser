@@ -1,28 +1,7 @@
 <template>
   <div class="user-dashboard">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <router-link class="navbar-brand" to="/user/dashboard">Library Dashboard</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <router-link to="/user/dashboard" class="nav-link">Home</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/book/issued" class="nav-link">Books</router-link>
-            </li>
-            <li class="nav-item">
-              <router-link to="/user/sections" class="nav-link">Sections</router-link>
-            </li>
-          </ul>
-          <button class="btn btn-outline-light ms-auto" @click="logout">Logout</button>
-        </div>
-      </div>
-    </nav>
+    <Navbar :show-search-bar="true"/>
 
     <!-- Books Section -->
     <div class="container my-4 pt-5">
@@ -92,8 +71,10 @@
 </template>
 <script>
 import { Modal } from "bootstrap/js/index.esm.js";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
+  components: {Navbar},
   data() {
     return {
       books: [],

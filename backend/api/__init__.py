@@ -1,5 +1,5 @@
 from .resources import (UserRegister, UserLogin, LibrarianDashboard, UserActions, BookResource, SectionResource,
-                        LibrarianUser, IssueBook, SearchBooks, BookRequests)
+                        LibrarianUser, SearchRequests, IssueBook, SearchBooks, BookRequests)
 from backend import api
 
 
@@ -14,3 +14,4 @@ def initialize_api():
     api.add_resource(IssueBook, '/book/issued', '/book/issue/<int:book_id>')
     api.add_resource(SearchBooks, '/search/book')
     api.add_resource(BookRequests, '/admin/requests')
+    api.add_resource(SearchRequests, '/search/request')

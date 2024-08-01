@@ -1,30 +1,6 @@
 <template>
   <div class="admin-users">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item">
-              <router-link to="/admin/dashboard" class="nav-link">Dashboard</router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/books">Books</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/sections">Sections</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/users">Users</a>
-            </li>
-          </ul>
-        </div>
-        <button class="btn btn-outline-light ms-3" @click="logout">Logout</button>
-      </div>
-    </nav>
+    <Navbar :books-link="'/admin/books'" :dashboard-link="'/admin/dashboard'" :dashboard-text="'Librarian  Dashboard'"/>
 
     <div class="container-fluid mt-5 pt-4">
       <div class="row">
@@ -89,8 +65,11 @@
 </template>
 
 <script>
+import Navbar from "@/components/Navbar.vue";
+
 export default {
   name: 'AdminUsers',
+  components: {Navbar},
   data() {
     return {
       whitelistedUsers: [],

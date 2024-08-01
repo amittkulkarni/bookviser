@@ -1,30 +1,6 @@
 <template>
   <div class="admin-dashboard">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Admin Dashboard</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <router-link class="nav-link" to="/admin/books">Books</router-link>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/sections">Sections</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/admin/users">Users</a>
-            </li>
-          </ul>
-        </div>
-        <button class="btn btn-outline-light" @click="logout" >Logout</button>
-      </div>
-    </nav>
+    <Navbar :books-link="'/admin/books'" :dashboard-link="'/admin/dashboard'" :dashboard-text="'Librarian Dashboard'"></Navbar>
 
     <div class="container-fluid mt-5 pt-4 full-height">
       <div class="row full-height">
@@ -94,9 +70,11 @@
 
 <script>
 import GraphComponent from './Graph.vue';
+import Navbar from "@/components/Navbar.vue";
 
 export default {
   components: {
+    Navbar,
     GraphComponent
   },
   data() {

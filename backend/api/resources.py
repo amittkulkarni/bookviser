@@ -271,8 +271,19 @@ class SearchBooks(Resource):
     @jwt_required()
     def get(self):
         args = request.args
-        books = Book.query.filter(Book.name.like(f"%{args.get('name', '')}%")).all()
+        books = Book.query.filter(Book.name.ilike(f"%{args.get('name', '')}%")).all()
         return {'books': [book.as_dict() for book in books]}, 200
+
+
+class SearchRequests(Resource):
+    @jwt_required()
+    def get(self):
+        query = request.args.get('name', '').strip()
+        requests = BookIssue.query.join(User).join(Book).filter(
+            (User.username.ilike(f"%{query}%")) |
+            (Book.name.ilike(f"%{query}%"))
+        ).all()
+        return {'requests': [req.as_dict() for req in requests]}, 200
 
 
 class BookRequests(Resource):
