@@ -3,8 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Api
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-from celery import Celery, Task
+from flask_mail import Mail
+import flask_excel as excel
+from backend.celeryapp import celery_init_app
 import os
+
 
 current_directory = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
@@ -22,25 +25,13 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 3600
 db = SQLAlchemy(app)
 api = Api(app, prefix='/api')
 jwt = JWTManager(app)
+celery_app = celery_init_app(app)
+excel.init_excel(app)
+mail = Mail(app)
 with app.app_context():
     from backend.api import initialize_api
     from backend.models import User
     initialize_api()
-
-
-def celery_init_app(app: Flask) -> Celery:
-    class FlaskTask(Task):
-        def __call__(self, *args: object, **kwargs: object) -> object:
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery_app = Celery(app.name, task_cls=FlaskTask)
-    celery_app.config_from_object('config')
-    celery_app.set_default()
-    app.extensions["celery"] = celery_app
-    return celery_app
-
-celery_app = celery_init_app(app)
 
 
 def create_tables():
