@@ -3,5 +3,7 @@ flask-cors
 flask-sqlalchemy
 flask-restful
 flask-jwt-extended
-flask-excel
+flask-mail
 celery
+pdfkit
+redis

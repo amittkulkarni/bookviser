@@ -1,7 +1,7 @@
 from celery import shared_task
 from flask import render_template
 from flask_mail import Message
-from backend import mail
+from backend import mail, app
 from backend.models import User, BookIssue, Feedback
 import pdfkit
 from datetime import datetime, timedelta
@@ -24,13 +24,20 @@ def generate_monthly_report():
         report_html = render_template('report.html', user=user, issued_books=issued_books, feedbacks=feedbacks)
         pdf = pdfkit.from_string(report_html, False)
 
-        msg = Message('Monthly Activity Report', sender='your-email@example.com', recipients=[user.email])
+        msg = Message('Monthly Activity Report', sender='amitcoolkarni1291@gmail.com', recipients=[user.email])
         msg.attach('report.pdf', 'application/pdf', pdf)
         mail.send(msg)
 
 
-# @shared_task(name='celery.hello_world')
-# def hello_world():
-#     return 'hello world'
-
-
+@shared_task(ignore_result=False)
+def send_notification():
+    threshold_date = datetime.utcnow() - timedelta(days=1)
+    inactive_users = User.query.filter(User.last_login < threshold_date).all()
+    print(inactive_users)
+    if inactive_users:
+        subject = 'Reminder to Visit the App'
+        recipients = [user.email for user in inactive_users]
+        body = 'It looks like you haven\'t visited our app recently. Please log in to check out the latest updates!'
+        with app.app_context():
+            msg = Message(subject, sender='amitcoolkarni1291@gmail.com', recipients=recipients, body=body)
+            mail.send(msg)

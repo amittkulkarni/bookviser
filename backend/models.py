@@ -11,6 +11,7 @@ class User(db.Model):
     role = db.Column(db.String(20), default='user', nullable=False)
     issues = db.relationship('BookIssue', backref='user', lazy=True)
     flag = db.Column(db.Boolean, default=True)
+    last_login = db.Column(db.DateTime, index=True)
 
     def as_dict(self):
         return {col.name: getattr(self, col.name) for col in self.__table__.columns}

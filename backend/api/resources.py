@@ -4,6 +4,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from sqlalchemy.exc import IntegrityError
 from backend.models import User, Book, Section, BookIssue
 from backend import db
+from datetime import datetime
 
 
 class UserRegister(Resource):
@@ -26,6 +27,13 @@ class UserLogin(Resource):
         data = request.get_json()
         user = User.query.filter_by(username=data['username'], role=data['role']).first()
         if user and user.password == data['password']:
+            user.last_login = datetime.utcnow()
+            try:
+                db.session.add(user)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
+                return {'message': 'Error updating last login'}, 500
             access_token = create_access_token(identity={'username': user.username, 'id': user.user_id, 'role': user.role})
             return {'message': 'Login Successful', 'access_token': access_token, 'role': user.role}, 200
         return {'message': 'Invalid credentials'}, 401

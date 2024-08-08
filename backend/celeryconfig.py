@@ -10,4 +10,8 @@ beat_schedule = {
         'task': 'tasks.generate_and_send_report',
         'schedule': crontab(day_of_month='1', hour='0', minute='0'),
     },
+    'send_notifs_every_day': {
+        'task': 'tasks.send_notification',
+        'schedule': crontab(hour='18', minute='0'),
+    },
 }
