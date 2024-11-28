@@ -1,35 +1,69 @@
 # Bookviser
 
-This readme should help get you started developing with Vue 3 with Flask and RESTful API.
+Bookviser is a web-based library management application developed as part of the Modern Application Development - II course at IIT Madras. The application leverages Flask for the backend, Vue.js for the frontend, and Celery for asynchronous task management.
 
-## Recommended IDE Setup
+## Features
 
-[Pycharm Professional](https://www.jetbrains.com/pycharm/) + [DB Browser for SQLite](https://sqlitebrowser.org/) + [Insomnia](https://insomnia.rest/)
+- **User Authentication:** Secure login and registration system for users.
+- **Book Management:** Add, edit, and delete book records.
+- **Search Functionality:** Efficient search capabilities to locate books by title, author, or genre.
+- **Borrowing System:** Users can borrow and return books, with real-time tracking of availability.
+- **Notifications:** Automated alerts for due dates and overdue books.
+- **Admin Dashboard:** Comprehensive interface for administrators to manage users and books.
 
-## API configuration
+## Technologies Used
 
-See [Flask-RESTful API Reference](https://flask-restful.readthedocs.io/en/latest/).
+- **Backend:** Python with Flask
+- **Frontend:** JavaScript with Vue.js
+- **Asynchronous Tasks:** Celery
+- **Database:** SQLite
+- **Web Server:** WSGI
 
-## Project Setup
+## Installation
 
-```sh
-npm install
-```
-```sh
-pip3 requirements.txt
-```
+1. **Clone the Repository:**
 
-### Compile and Hot-Reload for Development
+   ```bash
+   git clone https://github.com/amittkulkarni/bookviser.git
+   ```
+2. **Navigate to the Project Directory:**
+   ```bash
+   cd bookviser
+   ```
+3. **Install Backend Dependencies:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+4. **Install Frontend Dependencies:**
+   ```bash
+   npm install
+   ```
+5. **Run the Application:**
 
-```sh
-npm run dev
-```
-```sh
-python wsgi.py
-```
+      Backend:
+      ```bash
+      python wsgi.py
+      ```
+      Frontend:
+      ```bash
+      npm run dev
+      ```
+## Usage
 
-### Compile and Minify for Production
+- Access the application through http://localhost:5000 in your web browser.
+- Register for a new account or log in with existing credentials.
+- Explore the library, borrow books, and manage your account.
 
-```sh
-npm run build
-```
+## Contributing
+
+Contributions are welcome! To contribute:
+
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature-branch).
+3. Commit your changes (git commit -am 'Add new feature').
+4. Push to the branch (git push origin feature-branch).
+5. Create a new Pull Request.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
