@@ -50,7 +50,7 @@ Bookviser is a web-based library management application developed as part of the
       ```
 ## Usage
 
-- Access the application through http://localhost:5000 in your web browser.
+- Access the application through http://localhost:5173 in your web browser.
 - Register for a new account or log in with existing credentials.
 - Explore the library, borrow books, and manage your account.
 
